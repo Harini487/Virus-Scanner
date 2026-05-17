@@ -4,7 +4,7 @@ import FormData from 'form-data';
 
 export const config = {
     api: {
-        bodyParser: false  // ✅ Required — lets formidable handle the raw body
+        bodyParser: false
     }
 };
 
