@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-    // Replace with your actual GitHub Pages URL
     res.setHeader('Access-Control-Allow-Origin', 'https://yourname.github.io');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -17,10 +16,7 @@ export default async function handler(req, res) {
             method,
             headers: {
                 "x-apikey": API_KEY,
-                ...(isFormData
-                    ? { "content-type": "application/x-www-form-urlencoded" }
-                    : {}
-                )
+                ...(isFormData ? { "content-type": "application/x-www-form-urlencoded" } : {})
             },
             ...(body ? { body } : {})
         });
