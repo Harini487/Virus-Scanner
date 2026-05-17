@@ -2,10 +2,10 @@ import formidable from 'formidable';
 import fs from 'fs';
 import FormData from 'form-data';
 
-export const config = { api: { bodyParser: false } }; // ✅ required for file uploads
+export const config = { api: { bodyParser: false } };
 
 export default async function handler(req, res) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://yourname.github.io');
+    res.setHeader('Access-Control-Allow-Origin', 'https://harini487.github.io');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
