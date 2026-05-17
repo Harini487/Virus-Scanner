@@ -1,7 +1,7 @@
 // ✅ No API key here anymore — it lives safely in Vercel environment variables
 
 // 🔁 Replace this with your actual Vercel deployment URL
-const PROXY_URL = "https://your-project.vercel.app/api/scan";
+const PROXY_URL = "https://virus-scanner-git-main-hariabeys-projects.vercel.app/";
 
 // Utility function to get DOM elements by ID
 const getElement = id => document.getElementById(id);
