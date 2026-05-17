@@ -1,2 +1,8 @@
-npm init -y
-npm install formidable form-data
+{
+  "name": "virustotal-scanner",
+  "version": "1.0.0",
+  "dependencies": {
+    "formidable": "^3.5.1",
+    "form-data": "^4.0.0"
+  }
+}
