@@ -32,6 +32,9 @@ export default async function handler(req, res) {
 
         // ✅ formidable v3 returns arrays
         const file = Array.isArray(files.file) ? files.file[0] : files.file;
+        // ✅ Add this to see exactly what formidable received
+        console.log('Received files:', JSON.stringify(files));
+        console.log('Received file:', JSON.stringify(file));
         if (!file) return res.status(400).json({ error: 'No file received' });
 
         // ✅ Build a FormData to forward to VirusTotal
