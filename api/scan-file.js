@@ -1,7 +1,3 @@
-import formidable from 'formidable';
-import fs from 'fs';
-import FormData from 'form-data';
-
 export const config = {
     api: {
         bodyParser: false
@@ -20,37 +16,24 @@ export default async function handler(req, res) {
     if (!API_KEY) return res.status(500).json({ error: 'API key not configured' });
 
     try {
-        // ✅ Parse the incoming multipart form
-        const form = formidable({ maxFileSize: 32 * 1024 * 1024 });
+        // Read raw body as buffer
+        const chunks = [];
+        for await (const chunk of req) {
+            chunks.push(chunk);
+        }
+        const rawBody = Buffer.concat(chunks);
 
-        const [fields, files] = await new Promise((resolve, reject) => {
-            form.parse(req, (err, fields, files) => {
-                if (err) reject(err);
-                else resolve([fields, files]);
-            });
-        });
+        // Get content-type header (includes boundary for multipart)
+        const contentType = req.headers['content-type'];
 
-        // ✅ formidable v3 returns arrays
-        const file = Array.isArray(files.file) ? files.file[0] : files.file;
-        // ✅ Add this to see exactly what formidable received
-        console.log('Received files:', JSON.stringify(files));
-        console.log('Received file:', JSON.stringify(file));
-        if (!file) return res.status(400).json({ error: 'No file received' });
-
-        // ✅ Build a FormData to forward to VirusTotal
-        const formData = new FormData();
-        formData.append('file', fs.createReadStream(file.filepath), {
-            filename: file.originalFilename || 'upload',
-            contentType: file.mimetype || 'application/octet-stream'
-        });
-
+        // Forward the raw multipart body directly to VirusTotal as-is
         const response = await fetch('https://www.virustotal.com/api/v3/files', {
             method: 'POST',
             headers: {
                 'x-apikey': API_KEY,
-                ...formData.getHeaders()
+                'content-type': contentType
             },
-            body: formData
+            body: rawBody
         });
 
         const data = await response.json();
